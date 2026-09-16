@@ -96,7 +96,10 @@ def expand_code(text: str) -> tuple[str, int]:
             label = f"{rel}:{first}-{last}"
         count += 1
         body = "\n".join(selected).rstrip("\n")
-        return f"```python\n# {label}\n{body}\n```"
+        lang = {".json": "json", ".md": "markdown", ".txt": "text"}.get(
+            path.suffix, "python"
+        )
+        return f"```{lang}\n# {label}\n{body}\n```"
 
     return PLACEHOLDER.sub(repl, text), count
 

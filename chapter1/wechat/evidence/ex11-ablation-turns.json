@@ -1,0 +1,49 @@
+{
+ "_excerpt": "实验 1-1 真实请求/响应摘录（deepseek-flash，源 context/validation/real_20260914T140001Z/evidence.json，长串以 …（截断） 标注）",
+ "no_tool_calls_turn1": {
+  "request": {
+   "messages": [
+    {
+     "role": "system",
+     "content": "You are an intelligent assistant with access to tools. \n\nYou …（截断）"
+    },
+    {
+     "role": "user",
+     "content": "According to the company's quarterly revenue:\n- Q1: 2.5 million USD\n- Q2: 2.1 million EUR\n- Q3: 1.8 million GBP\n- Q4: 38 …（截断）"
+    }
+   ],
+   "tools_key_present": false
+  },
+  "finish_reason": "stop",
+  "content": "<｜｜DSML｜｜ calls>\n<｜｜DSML｜｜ invoke name=\"functions.currency_conversion\">\n<｜｜DSML｜｜ parameter name=\"from_currency\" string=\"true\">EUR</｜｜DSML｜｜ parameter>\n<｜｜DSML｜｜ parameter name=\"to_currency\" string=\"true\">USD</｜｜DSML｜｜ parameter>\n …（截断）",
+  "note": "无工具定义时，模型把内部 DSML 调用标记当纯文本输出；参数 2.1/1.8/380 是任务自己的数字，未编造汇率",
+  "outcome": "no_unsupported_numbers"
+ },
+ "no_tool_results_turn2": {
+  "sent_tail": [
+   {
+    "role": "assistant",
+    "tool_call": {
+     "name": "convert_currency",
+     "arguments": "{\"amount\": 2.1, \"from_currency\": \"EUR\", \"to_currency\": \"USD\"}"
+    }
+   },
+   {
+    "role": "tool",
+    "content": ""
+   }
+  ],
+  "note": "本轮 3 条工具消息内容全为空串（静默隐藏）；下一轮模型仍发同类调用，第 5 轮触顶",
+  "next_model_action": {
+   "name": "convert_currency",
+   "arguments": "{\"amount\": 2.1, \"from_currency\": \"EUR\", \"to_currency\": \"USD\"}"
+  }
+ },
+ "full_turn2_contrast": {
+  "tool_message": {
+   "role": "tool",
+   "content": "{\"original_amount\": 2100000.0, \"from_currency\": \"EUR\", \"to_currency\": \"USD\", \"converted_amount\": 2282608.7, \"exchange_rate\": 1.087, \"timestamp\": \"2026 …（截断）"
+  },
+  "note": "同一位置，full 臂携带真实观测，模型据此继续汇总"
+ }
+}

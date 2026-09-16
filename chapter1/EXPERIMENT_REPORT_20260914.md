@@ -116,7 +116,7 @@ flowchart TB
 | full | `correct`（命中数值评分标准） | 3/5 | 一致 |
 | no_history | `no_terminal_response`（重复换汇直到触顶） | 5（触顶） | 一致 |
 | no_reasoning | `correct` —— **无退化**，与正文修订后的表述一致 | 3/5 | 一致 |
-| no_tool_calls | `no_unsupported_numbers`（声明无可达换汇工具，未编造数字） | 1 | 一致 |
+| no_tool_calls | `no_unsupported_numbers`（把内部 DSML 工具调用标记当纯文本输出，试图调用不存在的工具；参数均为任务自身数字，未编造） | 1 | 一致 |
 | no_tool_results | `no_terminal_response`（盲执行直到触顶） | 5（触顶） | 一致 |
 
 - 用量：22,907 tokens（prompt 18,694 / completion 4,213，含 1,076 reasoning tokens，缓存命中 14,080）。
